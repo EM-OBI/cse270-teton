@@ -11,6 +11,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 
+
 class TestSmokeTests():
   def setup_method(self, method):
     options = Options()
@@ -69,7 +70,5 @@ class TestSmokeTests():
     elements = self.driver.find_elements(By.CSS_SELECTOR, ".myinput:nth-child(2)")
     assert len(elements) > 0
     self.driver.find_element(By.CSS_SELECTOR, ".mysubmit:nth-child(4)").click()
-    elements = self.driver.find_elements(By.CSS_SELECTOR, ".errorMessage")
-    assert len(elements) > 0
-    assert self.driver.find_element(By.CSS_SELECTOR, ".errorMessage").text == "Invalid username and password."
+    WebDriverWait(self.driver, 30).until(expected_conditions.text_to_be_present_in_element((By.CSS_SELECTOR, ".errorMessage"), "Invalid username and password."))
   
